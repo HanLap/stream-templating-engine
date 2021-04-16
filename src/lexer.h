@@ -19,7 +19,8 @@ enum TokenClass {
     ID,      // variable identifiers
     IF,      // if
     ELIF,    // elseif
-    ELSE     // else
+    ELSE,    // else
+    END      // end of file
 };
 
 typedef struct token {
@@ -27,7 +28,7 @@ typedef struct token {
     const char      *value;
     size_t           line;
     size_t           col;
-} token;
+} Token;
 
 
 typedef struct lexer {
@@ -36,12 +37,16 @@ typedef struct lexer {
     size_t  line;
     size_t  col;
     bool    inblock;
-} lexer;
-
-bool init_lexer(lexer *in, FILE *stream);
+} Lexer;
 
 
-bool next_token(lexer *in, token* tok);
+bool init_lexer(Lexer *lexer, FILE *stream);
+
+
+/**
+ * 
+ **/
+bool next_token(Lexer *lexer, Token *token);
 
 
 

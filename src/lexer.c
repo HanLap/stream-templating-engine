@@ -7,7 +7,7 @@ char *LEXER_PREFIX  = 0;
 char *LEXER_POSTFIX = 0;
 
 
-bool init_lexer(lexer *lex, FILE *stream) {
+bool init_lexer(Lexer *lex, FILE *stream) {
   lex->stream  = stream;
   lex->pos     = 0;
   lex->line    = 0;
@@ -17,7 +17,7 @@ bool init_lexer(lexer *lex, FILE *stream) {
 }
 
 
-bool is_prefix(lexer *lex) {
+bool is_prefix(Lexer *lex) {
   for(size_t i = 1; i < strlen(LEXER_PREFIX); i++) {
     char c = getc(lex->stream); 
     if (c != LEXER_PREFIX[i]) {
@@ -32,9 +32,7 @@ bool is_prefix(lexer *lex) {
 }
 
 
-
-
-bool parse_to_next_block(lexer *lex, token *tok) {
+bool parse_to_next_block(Lexer *lex, Token *tok) {
   size_t newpos  = lex->pos;
   size_t newline = lex->line;
   size_t newcol  = lex->col;
@@ -62,15 +60,15 @@ bool parse_to_next_block(lexer *lex, token *tok) {
   return true;
 }
 
-bool parse_block(lexer *lex, token *tok) {
+bool parse_block(Lexer *lex, Token *tok) {
 
 
-  return 1;
+  return false;
 }
 
 
 
-bool next_token(lexer *lex, token *tok) {
+bool next_token(Lexer *lex, Token *tok) {
   if (!LEXER_PREFIX) {
     fprintf(stderr, "LEXER_PREFIX is not set");
     return false;

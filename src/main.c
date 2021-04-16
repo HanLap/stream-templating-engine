@@ -11,17 +11,16 @@ int main(int argc, char *argv[]) {
   LEXER_POSTFIX = "}#>";
   
 
-  fprintf(stdout, "%s\n", LEXER_PREFIX);
-
-  lexer lex = {0};
+  Lexer lex = {0};
   init_lexer(&lex, stdin);
 
-  token tok = {0};
+  Token tok = {0};
 
-  if (next_token(&lex, &tok)) {
+  while (next_token(&lex, &tok)) {
     fprintf(stdout, "token: %s\n", tok.value);
-  } else {
-    fprintf(stderr, "could not parse token\n");
   }
+
+  fprintf(stdout, "parsing stopped\n");
+
   return 0; 
 }
