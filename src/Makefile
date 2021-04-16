@@ -42,6 +42,9 @@ build/.exists:
 	mkdir -p build
 	touch build/.exists
 
+.PHONY: test
+test: all
+	./test.sh
 
 .PHONY: clean
 clean:

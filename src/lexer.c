@@ -22,7 +22,7 @@ bool is_prefix(lexer *lex) {
     char c = getc(lex->stream); 
     if (c != LEXER_PREFIX[i]) {
       ungetc(c, lex->stream);
-      for (size_t j = i - 1; j >= 0; j--) {
+      for (size_t j = i - 1; j > 0; j--) {
         ungetc(LEXER_PREFIX[j], lex->stream);
       }
       return false;
@@ -47,9 +47,11 @@ bool parse_to_next_block(lexer *lex, token *tok) {
       newcol = 0;
     }
 
-    if (c == EOF) {}
+    if (c == EOF) {
+      return false;
+    }
 
-    if (c == LEXER_PREFIX[0] && is_prefix(lex)) {
+    if (is_prefix(lex)) {
       
     }
 
