@@ -21,26 +21,15 @@ endif
 
 
 ### DEPENDENCIES ###
-DEPS = $(wildcard *.h)
+DEPS = $(wildcard src/*.h)
 
-SRCS = $(shell find -L . -type f -name "*.c")
-OBJS = $(addprefix build/,$(SRCS:.c=.o))
+SRCS = $(shell find -L src -type f -name "*.c")
+OBJS = $(SRCS:src/%.c=build/%.o)
 
 
 ### RECIPES ###
 .PHONY: all
 all: build/ste
-
-build/%.o: %.c $(DEPS) build/.exists
-	$(CC) -c -o $@ $< $(CFLAGS)  
-
-build/ste: $(OBJS)
-	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
-
-
-build/.exists:
-	mkdir -p build
-	touch build/.exists
 
 .PHONY: test
 test: all
@@ -49,3 +38,14 @@ test: all
 .PHONY: clean
 clean:
 	-rm -r build
+	
+
+build/%.o: src/%.c $(DEPS) build/.exists
+	$(CC) -c -o $@ $< $(CFLAGS)  
+
+build/ste: $(OBJS)
+	$(CC) -o $@ $^ $(CFLAGS) $(LDFLAGS)
+
+build/.exists:
+	mkdir -p build
+	touch build/.exists
