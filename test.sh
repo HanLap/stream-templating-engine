@@ -13,8 +13,8 @@ for input in *.input; do
   variables=$(cat "${name}.variables")
 
   # run ste and timeout if it takes to long
-  actual=$(timeout 1 ../build/ste -p "<#{" -P "}#>" -v "$variables" "$input")
-  # actual="a b c d e f g h i"
+  actual=$(timeout 1 ../build/ste -p "<#{" -P "}#>" -v "$variables" "$(cat $input)")
+
   timeout="$?"
 
   diff=$(echo $actual | diff -q "./$expected" -)
@@ -36,8 +36,8 @@ for input in *.input; do
 
 done
 
-# if [ $failed ]; then
-#   exit 1
-# else 
-#   exit 0
-# fi
+if [ $failed ]; then
+  exit 1
+else 
+  exit 0
+fi
